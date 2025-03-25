@@ -1,3 +1,4 @@
+#include "KafkaProducerConfig.h"
 #include <iostream>
 #include <fstream>
 #include <librdkafka/rdkafkacpp.h>
@@ -27,11 +28,11 @@ public:
 
 PostDeliveryReportCb ex_dr_cb;
 
-RdKafka::Producer* createProducer(const std::string& brokers) {
+RdKafka::Producer* createProducer(const ProducerConfig& config) {
     RdKafka::Conf* conf = RdKafka::Conf::create(RdKafka::Conf::CONF_GLOBAL);
     std::string errstr;
 
-    if (conf->set("bootstrap.servers", brokers, errstr) != RdKafka::Conf::CONF_OK) {
+    if (conf->set("bootstrap.servers", config.getBootstrapServers(), errstr) != RdKafka::Conf::CONF_OK) {
         std::cerr << errstr << std::endl;
         delete conf;
         return nullptr;
@@ -85,16 +86,16 @@ void produceMessage(RdKafka::Producer* producer, const std::string& topic, const
 }
 
 int main(int argc, char** argv) {
-    if (argc != 4) {
-        std::cerr << "Usage: " << argv[0] << " <brokers> <topic> <message>\n";
+    if (argc != 3) {
+        std::cerr << "Usage: " << argv[0] << " <topic> <message>\n";
         exit(1);
     }
 
-    std::string brokers = argv[1];
-    std::string topic = argv[2];
-    std::string message = argv[3];
+    std::string topic = argv[1];
+    std::string message = argv[2];
 
-    RdKafka::Producer* producer = createProducer(brokers);
+    ProducerConfig config;
+    RdKafka::Producer* producer = createProducer(config);
 
     if (!producer) {
         std::cerr << "Failed to create producer. Exiting." << std::endl;
