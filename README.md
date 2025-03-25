@@ -10,15 +10,17 @@ This repository contains a simple Kafka producer program written in C++. The pro
 
 - `SimpleKafkaProducer.cpp`: Contains the main implementation of the Kafka producer.
 - `SimpleKafkaProducer.h`: Header file for the Kafka producer.
+- `KafkaProducerConfig.cpp`: Contains the implementation of the Kafka producer configuration.
+- `KafkaProducerConfig.h`: Header file for the Kafka producer configuration.
 
 ## Compilation and Execution
 
 ### Compilation
 
-To compile the provided `SimpleKafkaProducer.cpp` file, use the following command:
+To compile the provided `SimpleKafkaProducer.cpp` file along with the configuration file, use the following command:
 
 ```sh
-g++ -o SimpleKafkaProducer SimpleKafkaProducer.cpp -lrdkafka++
+g++ -o SimpleKafkaProducer SimpleKafkaProducer.cpp KafkaProducerConfig.cpp -lrdkafka++
 ```
 
 ### Execution
