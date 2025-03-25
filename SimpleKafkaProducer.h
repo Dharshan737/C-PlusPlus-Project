@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <librdkafka/rdkafkacpp.h>
+#include "KafkaProducerConfig.h"
 
 /**************** Callback functions **************/
 class PostDeliveryReportCb : public RdKafka::DeliveryReportCb {
