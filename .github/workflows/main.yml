@@ -1,0 +1,28 @@
+name: Compile Kafka Sample Programs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ librdkafka-dev
+
+      - name: Compile Kafka Producer
+        run: g++ -o SimpleKafkaProducer SimpleKafkaProducer.cpp KafkaProducerConfig.cpp -lrdkafka++
+
+      - name: Compile Kafka Consumer
+        run: g++ -o SimpleKafkaConsumer SimpleKafkaConsumer.cpp KafkaConsumerConfig.cpp -lrdkafka++
+
+      - name: Compile Kafka Metadata Fetcher
+        run: g++ -o KafkaMetadataFetcher KafkaMetadataFetcher.cpp -lrdkafka++
